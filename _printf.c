@@ -25,7 +25,7 @@ int _printf(const char *format, ...)
 		else
 		{
 			_putchar(*format);
-			printed++;
+			count++;
 			format++;
 		}
 	}
