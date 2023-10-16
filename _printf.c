@@ -23,9 +23,9 @@ int _printf(const char *format, ...)
 		}
 		else
 		{
+			format++;
 			if (*format == '\0')
 				break;
-			format++;
 			if (*format == 'c')
 			{
 				int c = va_arg(args, int);
@@ -44,7 +44,7 @@ int _printf(const char *format, ...)
 					count++;
 				}
 			}
-			else
+			else if (*format == '%')
 			{
 				_putchar('%');
 				count++;
