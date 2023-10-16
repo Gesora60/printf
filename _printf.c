@@ -18,33 +18,33 @@ int _printf(const char *format, ...)
 	{
 		if (*format != '%')
 		{
-			format++;
-			_putchar(*format);
-			format++;
+			putchar(*format);
+			count++;
 		}
 		else
 		{
+		    format++;
 			if (*format == 'c')
 			{
 				int c = va_arg(args, int);
 
-				_putchar(c);
+				putchar(c);
 				count++;
 			}
 			else if (*format == 's')
 			{
 				char *s = va_arg(args, char *);
 
-				while (*string != '\0')
+				while (*s)
 				{
-					_putchar(*s);
+					putchar(*s);
 					s++;
 					count++;
 				}
 			}
 			else
 			{
-				_putchar('%');
+				putchar('%');
 				count++;
 			}
 		}
@@ -53,4 +53,3 @@ int _printf(const char *format, ...)
 	va_end(args);
 	return (count);
 }
-
