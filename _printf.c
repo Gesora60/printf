@@ -27,7 +27,12 @@ int _printf(const char *format, ...)
 			format++;
 			if (*format == '\0')
 				break;
-			if (*format == 'c')
+			else if (*format == '%')
+			{
+				_putchar('%');
+				count++;
+			}
+			else if (*format == 'c')
 			{
 				int c = va_arg(args, int);
 
@@ -74,11 +79,6 @@ int _printf(const char *format, ...)
 					num -= digit * pow10;
 					digits--;
 				}
-			}
-			else if (*format == '%')
-			{
-				_putchar('%');
-				count++;
 			}
 		}
 		format++;
