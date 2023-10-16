@@ -18,40 +18,16 @@ int _printf(const char *format, ...)
 	{
 		if (*format == '%')
 		{
-			_putchar(*format);
-			count++;
+			format++;
+			count = selector(format, args, count);
+			format++;
 		}
 		else
 		{
+			_putchar(*format);
+			printed++;
 			format++;
-			if (*format == '0')
-				break;
-			if (*format == 'c')
-			{
-				int c = va_arg(args, int);
-
-				_putchar(c);
-
-				count++;
-			}
-			else if (*format == 's')
-			{
-				char *s = va_arg(args, char *);
-
-				while (*s)
-				{
-					_putchar(*s);
-					s++;
-					count++;
-				}
-			}
-			else if (*format == '%')
-			{
-				_putchar('%');
-				count++;
-			}
 		}
-		format++;
 	}
 	va_end(args);
 	return (count);
