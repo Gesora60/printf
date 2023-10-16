@@ -70,7 +70,7 @@ int _printf(const char *format, ...)
 						pow10 *= 10;
 					}
 					digit = num / pow10;
-					printed += _putchar(digit + '0');
+					count += _putchar(digit + '0');
 					num -= digit * pow10;
 					digits--;
 				}
