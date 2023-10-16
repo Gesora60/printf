@@ -1,8 +1,4 @@
 #include "main.h"
-#include <stdio.h>
-#include <stdarg.h>
-#include <unistd.h>
-#include <limits.h>
 
 /**
  * _printf - implementation of the inbuilt printf
@@ -12,37 +8,27 @@
 
 int _printf(const char *format, ...)
 {
-	convert_match m[] = {
-		{"%s", printf_string}, {"%c", printf_char},
-		{"%%", printf_37},
-			};
+	int printed = 0;
 
 	va_list args;
-	int i = 0, j, len = 0;
 
 	va_start(args, format);
-	if (format == NULL || (format[0] == '%' && format[1] == '\0'))
-		return (-1);
 
-Here:
-	while (format[i] != '\0')
+	while (*format != '\0')
 	{
-		j = 13;
-		while (j >= 0)
+		if (*format == '%')
 		{
-			if (m[j].id[0] == format[i] && m[j].id[1] == format[i + 1])
-			{
-				len += m[j].f(args);
-				i = i + 2;
-				goto Here;
-			}
-			j--;
+			format++;
+			printed = selector(format, args, printed);
+			format++;
 		}
-		_putchar(format[i]);
-		len++;
-		i++;
+		else
+		{
+			_putchar(*format);
+			printed++;
+			format++;
+		}
 	}
 	va_end(args);
-	return (len);
+	return (printed);
 }
-
