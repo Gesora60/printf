@@ -3,7 +3,7 @@
 /**
  * selector - selects the appropriate specifiers
  * @args: number of arguements
- * @printed: the printed characters
+ * @count: the printed characters
  * @format: the format specifier
  * Return: printed charcaters
  */
