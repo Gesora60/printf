@@ -3,7 +3,8 @@
 /**
  * _printf - implementation of the inbuilt printf
  * @format: the format specifier
- * Return: the formated string
+ * Return:  the number of characters printed (excluding
+ *the null byte used to end output to strings)
  */
 
 int _printf(const char *format, ...)
@@ -42,6 +43,36 @@ int _printf(const char *format, ...)
 					_putchar(*s);
 					s++;
 					count++;
+				}
+			}
+			else if (*format == 'i' || 'd')
+			{
+				int num = va_arg(args, int);
+				int digits = 0;
+				int temp = num;
+				int digit;
+				if (num < 0)
+				{
+					count = += _putchar('-');
+					num = -num;
+					temp = num;
+				}
+				do {
+					digits++;
+					temp /= 10;
+				} while (temp != 0);
+				while (digits > 0)
+				{
+					int pow10 = 1;
+					int i;
+					for (i = 1; i < digits; i++)
+					{
+						pow10 *= 10;
+					}
+					digit = num / pow10;
+					printed += _putchar(digit + '0');
+					num -= digit * pow10;
+					digits--;
 				}
 			}
 			else if (*format == '%')
