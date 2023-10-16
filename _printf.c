@@ -19,30 +19,30 @@ int _printf(const char *format, ...)
 		if (*format != '%')
 		{
 			format++;
-			count_putchar(*format);
-			count++;
+			_putchar(*format);
+			format++;
 		}
 		else
 		{
-			format++;
-			if (*format == '\0') break;
 			if (*format == 'c')
 			{
 				int c = va_arg(args, int);
+
 				_putchar(c);
 				count++;
 			}
 			else if (*format == 's')
 			{
 				char *s = va_arg(args, char *);
-				while (*s)
+
+				while (*string != '\0')
 				{
 					_putchar(*s);
 					s++;
 					count++;
 				}
 			}
-			else if (*format == '%')
+			else
 			{
 				_putchar('%');
 				count++;
