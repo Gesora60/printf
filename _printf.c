@@ -1,47 +1,45 @@
 #include "main.h"
-#include <unistd.h>
 /**
- * _printf - Emulate the original.
- *
- * @format: Format by specifier.
- *
- * Return: count of chars.
+ * _printf - is a function that selects the correct function to print.
+ * @format: identifier to look for.
+ * Return: the length of the string.
  */
-int _printf(const char *format, ...)
+int _printf(const char * const format, ...)
 {
-	int i = 0, count = 0, count_fun;
+	convert_match m[] = {
+		{"%s", printf_string}, {"%c", printf_char},
+		{"%%", printf_37},
+		{"%i", printf_int}, {"%d", printf_dec}, {"%r", printf_srev},
+		{"%R", printf_rot13}, {"%b", printf_bin}, {"%u", printf_unsigned},
+		{"%o", printf_oct}, {"%x", printf_hex}, {"%X", printf_HEX},
+		{"%S", printf_exclusive_string}, {"%p", printf_pointer}
+	};
+
 	va_list args;
+	int i = 0, j, len = 0;
 
 	va_start(args, format);
-	if (!format || (format[0] == '%' && !format[1]))
+	if (format == NULL || (format[0] == '%' && format[1] == '\0'))
 		return (-1);
-	if (format[0] == '%' && format[1] == ' ' && !format[2])
-		return (-1);
-	while (format[i])
+
+Here:
+	while (format[i] != '\0')
 	{
-		count_fun = 0;
-		if (format[i] == '%')
+		j = 13;
+		while (j >= 0)
 		{
-			if (!format[i + 1] || (format[i + 1] == ' ' && !format[i + 2]))
+			if (m[j].id[0] == format[i] && m[j].id[1] == format[i + 1])
 			{
-				count = -1;
-				break;
+				len += m[j].f(args);
+				i = i + 2;
+				goto Here;
 			}
-			count_fun += get_function(format[i + 1], args);
-			if (count_fun == 0)
-				count += _putchar(format[i + 1]);
-			if (count_fun == -1)
-				count = -1;
-			i++;
+			j--;
 		}
-		else
-		{
-			(count == -1) ? (_putchar(format[i])) : (count += _putchar(format[i]));
-		}
+		_putchar(format[i]);
+		len++;
 		i++;
-		if (count != -1)
-			count += count_fun;
 	}
 	va_end(args);
-	return (count);
+	return (len);
 }
