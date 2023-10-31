@@ -57,7 +57,8 @@ while (format && format[i])
 int _printf(const char *format, ...)
 {
 typedate tipos[] = {
-	{'s', printString}, {'c', printChar}
+	{'s', printString}, {'c', printChar}, {'i', printInteger},
+	{'d', printDecimal}
 };
 va_list list;
 int cont = -1;
